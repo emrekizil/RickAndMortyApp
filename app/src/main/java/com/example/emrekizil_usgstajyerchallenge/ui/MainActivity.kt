@@ -3,42 +3,27 @@ package com.example.emrekizil_usgstajyerchallenge.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.example.emrekizil_usgstajyerchallenge.R
 import com.example.emrekizil_usgstajyerchallenge.domain.module.RickAndMortyEntity
+import com.example.emrekizil_usgstajyerchallenge.ui.home.HomeUiState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private val viewModel by viewModels<MainViewModel> ()
+
+    private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        println("kekod")
-        viewModel.getLocations()
-        observeUiState()
+
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
+
 
     }
 
-    private fun observeUiState() {
-       viewModel.locationResponse.observe(this){
-           println("yes")
-            when(it){
-                is UiState.Success->{
-                    println("no")
-                    handleSuccessUiState(it.data)
-                }
-                is UiState.Error->{
-                    println("erer")
-                }
-                is UiState.Loading->{
-                    println("dğpfğpdsfdsf")
-                }
-            }
-       }
-    }
-
-    private fun handleSuccessUiState(data: List<RickAndMortyEntity>) {
-        println(data[0].name+"sdasdasd")
-
-    }
 }

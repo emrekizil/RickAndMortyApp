@@ -1,7 +1,7 @@
 package com.example.emrekizil_usgstajyerchallenge.di
 
-import com.example.emrekizil_usgstajyerchallenge.domain.usecase.GetLocationsUseCase
-import com.example.emrekizil_usgstajyerchallenge.domain.usecase.GetLocationsUseCaseImpl
+import com.example.emrekizil_usgstajyerchallenge.domain.usecase.location.GetLocationsUseCase
+import com.example.emrekizil_usgstajyerchallenge.domain.usecase.location.GetLocationsUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,6 +14,6 @@ abstract class UseCaseModule {
 
     @Binds
     @ViewModelScoped
-    abstract fun bindGetLocationsUseCase(getLocationsUseCaseImpl: GetLocationsUseCaseImpl):GetLocationsUseCase
+    abstract fun bindGetLocationsUseCase(getLocationsUseCaseImpl: GetLocationsUseCaseImpl): GetLocationsUseCase
 
 }

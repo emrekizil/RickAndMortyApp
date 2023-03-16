@@ -1,4 +1,4 @@
-package com.example.emrekizil_usgstajyerchallenge.domain.usecase
+package com.example.emrekizil_usgstajyerchallenge.domain.usecase.location
 
 import com.example.emrekizil_usgstajyerchallenge.data.NetworkResponseState
 import com.example.emrekizil_usgstajyerchallenge.domain.module.RickAndMortyEntity
@@ -8,6 +8,6 @@ import javax.inject.Inject
 
 class GetLocationsUseCaseImpl @Inject constructor(
     private val repository: RickAndMortyRepository
-) : GetLocationsUseCase{
+) : GetLocationsUseCase {
     override suspend fun invoke(): Flow<NetworkResponseState<List<RickAndMortyEntity>>> = repository.getLocations()
 }
