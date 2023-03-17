@@ -15,15 +15,13 @@ class RemoteDataSourceImpl @Inject constructor(private val api: RickAndMortyApi)
             NetworkResponseState.Error(e)
         }
 
-    override suspend fun getCharactersById(characterIds: String): NetworkResponseState<List<CharacterResponseItem>> =
+    override suspend fun getCharactersById(characterIds: List<String>): NetworkResponseState<List<CharacterResponseItem>> =
         try {
             val response = api.getCharactersById(characterIds)
             NetworkResponseState.Success(response)
-        }catch (e:Exception){
+        } catch (e: Exception) {
             NetworkResponseState.Error(e)
         }
-
-
 
 
 }

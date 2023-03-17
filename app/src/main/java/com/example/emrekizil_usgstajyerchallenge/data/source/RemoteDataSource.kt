@@ -9,5 +9,5 @@ interface RemoteDataSource {
 
     suspend fun getLocations(): NetworkResponseState<List<Result>>
 
-    suspend fun getCharactersById(characterIds:String): NetworkResponseState<List<CharacterResponseItem>>
+    suspend fun getCharactersById(characterIds:List<String>): NetworkResponseState<List<CharacterResponseItem>>
 }

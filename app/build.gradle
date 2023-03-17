@@ -30,6 +30,7 @@ android {
         viewBinding true
     }
     compileOptions {
+        coreLibraryDesugaringEnabled  = true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -65,6 +66,9 @@ dependencies {
 
     //Coil
     implementation "io.coil-kt:coil:$coil_version"
+
+
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.0.2"
 
 
     //Test

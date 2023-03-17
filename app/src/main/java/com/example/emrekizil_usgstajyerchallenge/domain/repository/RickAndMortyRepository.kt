@@ -8,5 +8,5 @@ import kotlinx.coroutines.flow.Flow
 interface RickAndMortyRepository {
     suspend fun getLocations(): Flow<NetworkResponseState<List<RickAndMortyEntity>>>
 
-    suspend fun getCharactersById(characterIds:String):Flow<NetworkResponseState<List<CharacterEntity>>>
+    suspend fun getCharactersById(characterIds:List<String>):Flow<NetworkResponseState<List<CharacterEntity>>>
 }

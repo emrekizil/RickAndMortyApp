@@ -10,5 +10,5 @@ import javax.inject.Inject
 class GetCharactersByIdUseCaseImpl @Inject constructor(
     private val repository: RickAndMortyRepository
 ) : GetCharactersByIdUseCase {
-    override suspend fun invoke(characterIds: String): Flow<NetworkResponseState<List<CharacterEntity>>> = repository.getCharactersById(characterIds)
+    override suspend fun invoke(characterIds: List<String>): Flow<NetworkResponseState<List<CharacterEntity>>> = repository.getCharactersById(characterIds)
 }

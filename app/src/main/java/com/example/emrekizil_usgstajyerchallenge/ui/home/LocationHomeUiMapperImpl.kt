@@ -11,7 +11,7 @@ class LocationHomeUiMapperImpl @Inject constructor() : RickAndMortyListMapper<Ri
             LocationHomeUiData(
                 id = it.id,
                 name = it.name,
-                residents = it.residents.addCharactersIds()
+                residents = it.residents
             )
         } ?: emptyList()
     }

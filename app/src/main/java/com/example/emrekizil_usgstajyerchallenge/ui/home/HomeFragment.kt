@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.emrekizil_usgstajyerchallenge.databinding.FragmentHomeBinding
-import com.example.emrekizil_usgstajyerchallenge.domain.module.RickAndMortyEntity
+
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,15 +18,13 @@ class HomeFragment : Fragment() {
 
     private val viewModel by viewModels<HomeViewModel> ()
 
-    private lateinit var binding:FragmentHomeBinding
+    private lateinit var binding: FragmentHomeBinding
 
     private val adapter = LocationAdapter{
         locationHomeUiData -> adapterOnClick(locationHomeUiData)
     }
 
-    private fun adapterOnClick(locationHomeUiData: LocationHomeUiData) {
-        println(locationHomeUiData.residents)
-    }
+    private lateinit var characterAdapter :CharacterAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,11 +39,17 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        characterAdapter = CharacterAdapter()
+        binding.characterListRecyclerView.adapter = characterAdapter
+        binding.characterListRecyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
         viewModel.getLocations()
-        observeUiState()
+
+        observeLocationUiState()
+        observeCharacterUiState()
     }
 
-    private fun observeUiState() {
+
+    private fun observeLocationUiState() {
         viewModel.locationResponse.observe(viewLifecycleOwner){
             when(it){
                 is HomeUiState.Error->{
@@ -62,8 +66,33 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun observeCharacterUiState() {
+        viewModel.characterResponse.observe(viewLifecycleOwner){
+            when(it){
+                is HomeUiState.Error->{
+                    Toast.makeText(requireContext(),getString(it.message),Toast.LENGTH_SHORT).show()
+                }
+                is HomeUiState.Loading->{
+                    Toast.makeText(requireContext(),"Loading Characters",Toast.LENGTH_SHORT).show()
+                }
+                is HomeUiState.Success->{
+                    handleSuccessCharacterUiState(it.data)
+                }
+            }
+        }
+    }
+
+    private fun handleSuccessCharacterUiState(data: List<CharacterHomeUiData>) {
+        characterAdapter.updateItems(data)
+    }
+
+
     private fun handleSuccessUiState(data: List<LocationHomeUiData>) {
         adapter.updateItems(data)
+    }
+
+    private fun adapterOnClick(locationHomeUiData: LocationHomeUiData) {
+        viewModel.getCharactersById(locationHomeUiData.residents)
     }
 
 

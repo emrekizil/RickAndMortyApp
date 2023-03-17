@@ -38,19 +38,21 @@ class RickAndMortyRepositoryImpl @Inject constructor(
             }
         }.flowOn(ioDispatcher)
 
-    override suspend fun getCharactersById(characterIds: String): Flow<NetworkResponseState<List<CharacterEntity>>> =
+    override suspend fun getCharactersById(characterIds: List<String>): Flow<NetworkResponseState<List<CharacterEntity>>> =
         flow {
             emit(NetworkResponseState.Loading)
             when(val response = remoteDataSource.getCharactersById(characterIds)){
                 is NetworkResponseState.Error->emit(response)
                 NetworkResponseState.Loading->Unit
-                is NetworkResponseState.Success-> emit(
+                is NetworkResponseState.Success->{ emit(
                     NetworkResponseState.Success(
                         characterListMapper.map(
                             response.result
                         )
                     )
                 )
+
+                }
             }
         }.flowOn(ioDispatcher)
 

@@ -5,5 +5,5 @@ import com.example.emrekizil_usgstajyerchallenge.domain.module.CharacterEntity
 import kotlinx.coroutines.flow.Flow
 
 interface GetCharactersByIdUseCase {
-    suspend  operator fun invoke(characterIds:String): Flow<NetworkResponseState<List<CharacterEntity>>>
+    suspend  operator fun invoke(characterIds:List<String>): Flow<NetworkResponseState<List<CharacterEntity>>>
 }
