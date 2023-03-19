@@ -13,7 +13,7 @@ class CharacterViewHolder(private val binding:AdapterCharacterItemBinding):BaseV
             CharacterViewHolder(parent.inflateAdapterItem(AdapterCharacterItemBinding::inflate))
     }
     override fun onBind(data: CharacterHomeUiData) {
-        binding.characterTextView.text = data.name
+        binding.characterComponent.setCharacterData(data)
     }
 
 }

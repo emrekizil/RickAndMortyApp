@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.emrekizil_usgstajyerchallenge.databinding.FragmentHomeBinding
 
@@ -21,10 +22,12 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
 
     private val adapter = LocationAdapter{
-        locationHomeUiData -> adapterOnClick(locationHomeUiData)
+        locationHomeUiData -> adapterOnClickLocation(locationHomeUiData)
     }
 
-    private lateinit var characterAdapter :CharacterAdapter
+    private val characterAdapter = CharacterAdapter{
+        characterHomeUiData -> adapterOnClickCharacter(characterHomeUiData)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,11 +42,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        characterAdapter = CharacterAdapter()
         binding.characterListRecyclerView.adapter = characterAdapter
         binding.characterListRecyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
         viewModel.getLocations()
-
         observeLocationUiState()
         observeCharacterUiState()
     }
@@ -91,8 +92,12 @@ class HomeFragment : Fragment() {
         adapter.updateItems(data)
     }
 
-    private fun adapterOnClick(locationHomeUiData: LocationHomeUiData) {
+    private fun adapterOnClickLocation(locationHomeUiData: LocationHomeUiData) {
         viewModel.getCharactersById(locationHomeUiData.residents)
+    }
+    private fun adapterOnClickCharacter(characterHomeUiData: CharacterHomeUiData) {
+        val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(characterHomeUiData)
+        findNavController().navigate(action)
     }
 
 

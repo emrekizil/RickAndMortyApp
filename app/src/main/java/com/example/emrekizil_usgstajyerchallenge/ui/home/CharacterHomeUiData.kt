@@ -1,6 +1,9 @@
 package com.example.emrekizil_usgstajyerchallenge.ui.home
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class CharacterHomeUiData (
     val created: String,
     val episode: String,
@@ -12,4 +15,4 @@ data class CharacterHomeUiData (
     val origin: String,
     val species: String,
     val status: String,
-        )
+        ) : Parcelable
