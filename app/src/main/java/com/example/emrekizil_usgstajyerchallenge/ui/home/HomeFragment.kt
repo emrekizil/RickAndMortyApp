@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.emrekizil_usgstajyerchallenge.R
 import com.example.emrekizil_usgstajyerchallenge.databinding.FragmentHomeBinding
 
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,6 +49,8 @@ class HomeFragment : Fragment() {
         viewModel.getLocations()
         observeLocationUiState()
         observeCharacterUiState()
+        (activity as AppCompatActivity).supportActionBar?.setIcon(R.drawable.rick_and_morty_logo)
+        (activity as AppCompatActivity).supportActionBar?.setTitle("")
     }
 
 
