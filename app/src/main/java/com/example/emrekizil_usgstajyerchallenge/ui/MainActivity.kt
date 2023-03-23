@@ -2,6 +2,7 @@ package com.example.emrekizil_usgstajyerchallenge.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -28,10 +29,21 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
         setupActionBarWithNavController(navController)
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
+    fun homeFragment(){
+        binding.actionbarImageView.visibility = View.VISIBLE
+        binding.actionbarTextView.visibility= View.GONE
+    }
+    fun detailFragment(characterName:String){
+        binding.actionbarImageView.visibility = View.GONE
+        binding.actionbarTextView.visibility = View.VISIBLE
+        binding.actionbarTextView.text = characterName
+    }
+
 
 }

@@ -9,4 +9,8 @@ interface RickAndMortyRepository {
     suspend fun getLocations(): Flow<NetworkResponseState<List<RickAndMortyEntity>>>
 
     suspend fun getCharactersById(characterIds:List<String>):Flow<NetworkResponseState<List<CharacterEntity>>>
+
+    fun getIsAppFirstOpenState():Flow<Boolean>
+
+    suspend fun saveAppFirstOpenState(state:Boolean)
 }

@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/customToolbar"
@@ -20,9 +21,27 @@
             android:layout_height="match_parent"
             android:minHeight="?attr/actionBarSize"
             android:background="@color/white"
-            >
-        </com.google.android.material.appbar.MaterialToolbar>
 
+            >
+           <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/actionbar_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/rick_and_morty_logo"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/actionbar_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+
+                />
+        </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 

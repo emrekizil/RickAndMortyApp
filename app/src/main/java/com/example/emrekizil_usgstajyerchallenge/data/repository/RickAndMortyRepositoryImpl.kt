@@ -5,6 +5,7 @@ import com.example.emrekizil_usgstajyerchallenge.data.dto.character.CharacterRes
 import com.example.emrekizil_usgstajyerchallenge.data.dto.locations.Result
 import com.example.emrekizil_usgstajyerchallenge.data.mappers.RickAndMortyListMapper
 import com.example.emrekizil_usgstajyerchallenge.data.source.RemoteDataSource
+import com.example.emrekizil_usgstajyerchallenge.data.source.local.LocalDataSource
 import com.example.emrekizil_usgstajyerchallenge.di.IoDispatcher
 import com.example.emrekizil_usgstajyerchallenge.domain.module.CharacterEntity
 import com.example.emrekizil_usgstajyerchallenge.domain.module.RickAndMortyEntity
@@ -13,14 +14,15 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class RickAndMortyRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+    private val localDataSource:LocalDataSource,
     private val rickAndMortyListMapper:RickAndMortyListMapper<Result,RickAndMortyEntity>,
-    private val characterListMapper:RickAndMortyListMapper<CharacterResponseItem,CharacterEntity>
-
+    private val characterListMapper:RickAndMortyListMapper<CharacterResponseItem,CharacterEntity>,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : RickAndMortyRepository {
     override suspend fun getLocations(): Flow<NetworkResponseState<List<RickAndMortyEntity>>> =
         flow {
@@ -55,5 +57,13 @@ class RickAndMortyRepositoryImpl @Inject constructor(
                 }
             }
         }.flowOn(ioDispatcher)
+
+    override fun getIsAppFirstOpenState(): Flow<Boolean> =
+        localDataSource.isAppFirstOpen()
+
+    override suspend fun saveAppFirstOpenState(state:Boolean) {
+        localDataSource.saveAppFirstOpen(state)
+    }
+
 
 }

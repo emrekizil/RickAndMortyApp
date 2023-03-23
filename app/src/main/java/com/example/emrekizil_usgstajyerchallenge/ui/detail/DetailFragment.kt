@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.navArgs
 import com.example.emrekizil_usgstajyerchallenge.R
 import com.example.emrekizil_usgstajyerchallenge.databinding.FragmentDetailBinding
+import com.example.emrekizil_usgstajyerchallenge.ui.MainActivity
 import com.example.emrekizil_usgstajyerchallenge.ui.home.CharacterHomeUiData
 import com.example.emrekizil_usgstajyerchallenge.utility.loadImage
 
@@ -22,15 +23,15 @@ class DetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentDetailBinding.inflate(layoutInflater)
+        //(activity as AppCompatActivity).supportActionBar?.title = args.character.name
+        (activity as MainActivity).detailFragment(args.character.name)
+        //(activity as AppCompatActivity).supportActionBar?.setIcon(com.google.android.material.R.drawable.m3_tabs_transparent_background)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUi(args.character)
-        (activity as AppCompatActivity).supportActionBar?.title = args.character.name
-
-
     }
 
     private fun setupUi(character: CharacterHomeUiData) {
