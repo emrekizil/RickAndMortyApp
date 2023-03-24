@@ -16,14 +16,17 @@ class LocationViewHolder(private val binding:ItemLocationBinding,val onClick:(Lo
         fun createForm(parent:ViewGroup,onClick: (LocationHomeUiData) -> Unit) =
             LocationViewHolder(parent.inflateAdapterItem(ItemLocationBinding::inflate),onClick)
     }
-    init {
-        itemView.setOnClickListener {
-            viewData?.let { onClick(it) }
-            this.binding.locationTextView.background.setTint(Color.parseColor("#ffffff"))
-        }
-    }
     override fun onBind(data: LocationHomeUiData) {
         binding.locationTextView.text = data.name
         viewData = data
     }
+
+    fun bindSelectedItem(position:Int,selected:Boolean,function:(Int)->Unit){
+        itemView.isSelected = selected
+        itemView.setOnClickListener {
+            function(position)
+            viewData?.let { onClick(it)}
+        }
+    }
+
 }

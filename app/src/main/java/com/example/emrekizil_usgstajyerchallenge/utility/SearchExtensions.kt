@@ -24,8 +24,3 @@ fun String.dateTimeConverter():String{
             "${dateTime.year}, ${dateTime.hour}:${dateTime.minute}:${dateTime.second} "
 
 }
-
-
-/*return this.map {
-    it.split("/").last()
-}.joinToString(",")*/

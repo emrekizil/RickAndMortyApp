@@ -8,6 +8,7 @@ import androidx.datastore.preferences.core.emptyPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import okio.IOException
 import javax.inject.Inject
 
 class LocalDataSourceImpl @Inject constructor(
@@ -19,11 +20,15 @@ class LocalDataSourceImpl @Inject constructor(
 
     override fun isAppFirstOpen(): Flow<Boolean> =
         dataStore.data
-            .catch {
-                emit(emptyPreferences())
+            .catch { e->
+                if(e is IOException){
+                    emit(emptyPreferences())
+                }else{
+                    throw e
+                }
             }
             .map {preference->
-                preference[PreferencesKeys.isFirstOpenState] ?: false
+                preference[PreferencesKeys.isFirstOpenState] ?: true
             }
 
     override suspend fun saveAppFirstOpen(isFirstOpen: Boolean) {

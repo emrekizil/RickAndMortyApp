@@ -6,12 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.emrekizil_usgstajyerchallenge.R
 import com.example.emrekizil_usgstajyerchallenge.databinding.ActivityMainBinding
 import com.example.emrekizil_usgstajyerchallenge.databinding.FragmentHomeBinding
@@ -34,6 +36,9 @@ class HomeFragment : Fragment() {
         characterHomeUiData -> adapterOnClickCharacter(characterHomeUiData)
     }
 
+    var isLoading = false
+    var isLastPage = false
+    var isScrolling = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,13 +46,9 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(layoutInflater).apply {
             locationListRecyclerView.adapter = adapter
             locationListRecyclerView.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
+            locationListRecyclerView.addOnScrollListener(this@HomeFragment.scrollListener)
         }
-        //(activity as AppCompatActivity).supportActionBar?.show()
-       // (activity as AppCompatActivity).supportActionBar?.setTitle(0)
-       // (activity as AppCompatActivity).supportActionBar?.setIcon(R.drawable.rick_and_morty_logo)
         (activity as MainActivity).homeFragment()
-
-
         return binding.root
     }
 
@@ -66,12 +67,14 @@ class HomeFragment : Fragment() {
             when(it){
                 is HomeUiState.Error->{
                     Toast.makeText(requireContext(),getString(it.message),Toast.LENGTH_SHORT).show()
+                    isLoading = false
                 }
                 is HomeUiState.Loading->{
                     Toast.makeText(requireContext(),"Loading Locations",Toast.LENGTH_SHORT).show()
-
+                    isLoading = true
                 }
                 is HomeUiState.Success->{
+                    isLoading = false
                     handleSuccessUiState(it.data)
                 }
             }
@@ -109,6 +112,35 @@ class HomeFragment : Fragment() {
     private fun adapterOnClickCharacter(characterHomeUiData: CharacterHomeUiData) {
         val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(characterHomeUiData)
         findNavController().navigate(action)
+    }
+
+    val scrollListener = object : RecyclerView.OnScrollListener(){
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+
+            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+            val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+            val visibleItemCount = layoutManager.childCount
+            val totalItemCount = layoutManager.itemCount
+
+            val isNotLoadingAndNotLastPage = !isLoading && !isLastPage
+            val isAtLastItem = firstVisibleItemPosition + visibleItemCount >= totalItemCount
+            val isNotAtBeginning = firstVisibleItemPosition >= 0
+            val isTotalMoreThanVisible = totalItemCount >= 20 //Total Response Item
+            val shouldPaginate = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning &&
+                    isTotalMoreThanVisible && isScrolling
+            if(shouldPaginate){
+                isScrolling= false
+
+            }
+        }
+
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+            if(newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
+                isScrolling = true
+            }
+        }
     }
 
 
