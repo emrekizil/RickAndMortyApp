@@ -59,7 +59,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.characterListRecyclerView.adapter = characterAdapter
         binding.characterListRecyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-        viewModel.getLocations(pageNumber)
+        viewModel.getLocations()
         observeLocationUiState()
         observeCharacterUiState()
     }
@@ -71,13 +71,15 @@ class HomeFragment : Fragment() {
                 is HomeUiState.Error->{
                     Toast.makeText(requireContext(),getString(it.message),Toast.LENGTH_SHORT).show()
                     isLoading = false
+                    hideProgressBar()
                 }
                 is HomeUiState.Loading->{
-                    Toast.makeText(requireContext(),"Loading Locations",Toast.LENGTH_SHORT).show()
                     isLoading = true
+                    showProgressBar()
                 }
                 is HomeUiState.Success->{
                     isLoading = false
+                    hideProgressBar()
                     handleSuccessUiState(it.data)
                 }
             }
@@ -104,7 +106,6 @@ class HomeFragment : Fragment() {
         characterAdapter.updateItems(data)
     }
 
-
     private fun handleSuccessUiState(data: List<LocationHomeUiData>) {
         adapter.updateItems(data)
     }
@@ -115,6 +116,12 @@ class HomeFragment : Fragment() {
     private fun adapterOnClickCharacter(characterHomeUiData: CharacterHomeUiData) {
         val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(characterHomeUiData)
         findNavController().navigate(action)
+    }
+    private fun hideProgressBar(){
+        binding.locationProgressBar.visibility = View.INVISIBLE
+    }
+    private fun showProgressBar(){
+        binding.locationProgressBar.visibility = View.VISIBLE
     }
 
     val scrollListener = object : RecyclerView.OnScrollListener(){
@@ -132,22 +139,42 @@ class HomeFragment : Fragment() {
             val isTotalMoreThanVisible = totalItemCount >= 20 //Total Response Item
             val shouldPaginate = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning &&
                     isTotalMoreThanVisible && isScrolling
-            if(shouldPaginate){
+            if(shouldPaginate && !recyclerView.canScrollHorizontally(1)){
                 isScrolling= false
-                pageNumber++
-                viewModel.getLocations(pageNumber)
-                recyclerView.scrollToPosition(0)
-            }
-            if (!recyclerView.canScrollVertically(-1) && isScrolling ) {
-                Log.d("-----","start");
+                if (pageNumber!=7){
+                    hideProgressBar()
+                    viewModel.getLocations()
+                    pageNumber++
+                }
 
             }
+
         }
 
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
             if(newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
                 isScrolling = true
+            }
+        }
+    }
+
+    val anotherScrollListener = object:RecyclerView.OnScrollListener(){
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+            when(newState){
+                AbsListView.OnScrollListener.SCROLL_STATE_FLING->{
+
+                }
+                AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL->{
+
+                }else->{
+                    if(!recyclerView.canScrollHorizontally(1)){
+                        hideProgressBar()
+                        viewModel.getLocations()
+                        pageNumber++
+                    }
+                }
             }
         }
     }

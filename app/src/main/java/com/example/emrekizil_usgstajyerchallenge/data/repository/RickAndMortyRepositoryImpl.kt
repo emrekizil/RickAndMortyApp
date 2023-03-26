@@ -8,23 +8,22 @@ import com.example.emrekizil_usgstajyerchallenge.data.source.RemoteDataSource
 import com.example.emrekizil_usgstajyerchallenge.data.source.local.LocalDataSource
 import com.example.emrekizil_usgstajyerchallenge.di.IoDispatcher
 import com.example.emrekizil_usgstajyerchallenge.domain.module.CharacterEntity
-import com.example.emrekizil_usgstajyerchallenge.domain.module.RickAndMortyEntity
+import com.example.emrekizil_usgstajyerchallenge.domain.module.LocationEntity
 import com.example.emrekizil_usgstajyerchallenge.domain.repository.RickAndMortyRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class RickAndMortyRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource:LocalDataSource,
-    private val rickAndMortyListMapper:RickAndMortyListMapper<Result,RickAndMortyEntity>,
+    private val locationListMapper:RickAndMortyListMapper<Result,LocationEntity>,
     private val characterListMapper:RickAndMortyListMapper<CharacterResponseItem,CharacterEntity>,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : RickAndMortyRepository {
-    override suspend fun getLocations(pageNumber:Int): Flow<NetworkResponseState<List<RickAndMortyEntity>>> =
+    override suspend fun getLocations(pageNumber:Int): Flow<NetworkResponseState<List<LocationEntity>>> =
         flow {
             emit(NetworkResponseState.Loading)
             when(val response = remoteDataSource.getLocations(pageNumber)){
@@ -32,7 +31,7 @@ class RickAndMortyRepositoryImpl @Inject constructor(
                 NetworkResponseState.Loading->Unit
                 is NetworkResponseState.Success -> emit(
                     NetworkResponseState.Success(
-                        rickAndMortyListMapper.map(
+                        locationListMapper.map(
                             response.result
                         )
                     )

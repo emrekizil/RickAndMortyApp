@@ -1,6 +1,6 @@
 package com.example.emrekizil_usgstajyerchallenge.domain.module
 
-data class RickAndMortyEntity(
+data class LocationEntity(
     val id: Int,
     val name: String,
     val residents: List<String>

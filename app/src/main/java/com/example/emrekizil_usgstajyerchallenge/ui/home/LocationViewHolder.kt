@@ -1,11 +1,7 @@
 package com.example.emrekizil_usgstajyerchallenge.ui.home
 
-import android.graphics.Color
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import com.example.emrekizil_usgstajyerchallenge.R
 import com.example.emrekizil_usgstajyerchallenge.databinding.ItemLocationBinding
-import com.example.emrekizil_usgstajyerchallenge.domain.module.RickAndMortyEntity
 import com.example.emrekizil_usgstajyerchallenge.ui.base.BaseViewHolder
 import com.example.emrekizil_usgstajyerchallenge.utility.inflateAdapterItem
 

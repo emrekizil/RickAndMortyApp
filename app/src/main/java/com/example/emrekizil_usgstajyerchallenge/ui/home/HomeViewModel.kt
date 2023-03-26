@@ -8,12 +8,11 @@ import com.example.emrekizil_usgstajyerchallenge.R
 import com.example.emrekizil_usgstajyerchallenge.data.NetworkResponseState
 import com.example.emrekizil_usgstajyerchallenge.data.mappers.RickAndMortyListMapper
 import com.example.emrekizil_usgstajyerchallenge.domain.module.CharacterEntity
-import com.example.emrekizil_usgstajyerchallenge.domain.module.RickAndMortyEntity
+import com.example.emrekizil_usgstajyerchallenge.domain.module.LocationEntity
 import com.example.emrekizil_usgstajyerchallenge.domain.usecase.character.GetCharactersByIdUseCase
 import com.example.emrekizil_usgstajyerchallenge.domain.usecase.location.GetLocationsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,30 +20,35 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getLocationsUseCase: GetLocationsUseCase,
     private val getCharactersByIdUseCase: GetCharactersByIdUseCase,
-    private val rickAndMortyListMapper: RickAndMortyListMapper<RickAndMortyEntity,LocationHomeUiData>,
-    private val characterHomeUiMapper:RickAndMortyListMapper<CharacterEntity,CharacterHomeUiData>
+    private val rickAndMortyListMapper: RickAndMortyListMapper<LocationEntity, LocationHomeUiData>,
+    private val characterHomeUiMapper: RickAndMortyListMapper<CharacterEntity, CharacterHomeUiData>
 ) : ViewModel() {
 
     private var _locationResponse = MutableLiveData<HomeUiState<LocationHomeUiData>>()
-    val locationResponse:LiveData<HomeUiState<LocationHomeUiData>> get() = _locationResponse
+    val locationResponse: LiveData<HomeUiState<LocationHomeUiData>> get() = _locationResponse
 
-    var locationPaginateResponse: List<LocationHomeUiData>? = null
     var locationPaginateNumber = 1
 
     private var _characterResponse = MutableLiveData<HomeUiState<CharacterHomeUiData>>()
-    val characterResponse:LiveData<HomeUiState<CharacterHomeUiData>> get() = _characterResponse
+    val characterResponse: LiveData<HomeUiState<CharacterHomeUiData>> get() = _characterResponse
 
-    fun getLocations(pageNumber:Int){
+    fun getLocations() {
         viewModelScope.launch {
-            getLocationsUseCase.invoke(pageNumber).collectLatest { response->
-                when(response){
-                    is NetworkResponseState.Success->{
-                        _locationResponse.postValue(HomeUiState.Success(rickAndMortyListMapper.map(response.result)))
+            getLocationsUseCase.invoke(locationPaginateNumber).collectLatest { response ->
+                when (response) {
+                    is NetworkResponseState.Success -> {
+                        _locationResponse.postValue(
+                            handleLocationResponse(
+                                HomeUiState.Success(
+                                    rickAndMortyListMapper.map(response.result)
+                                )
+                            )
+                        )
                     }
-                    is NetworkResponseState.Error ->{
+                    is NetworkResponseState.Error -> {
                         _locationResponse.postValue(HomeUiState.Error(R.string.error))
                     }
-                    is NetworkResponseState.Loading->{
+                    is NetworkResponseState.Loading -> {
                         _locationResponse.postValue(HomeUiState.Loading)
                     }
                 }
@@ -52,38 +56,31 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun handleLocationResponse(response: HomeUiState.Success<LocationHomeUiData>): HomeUiState<LocationHomeUiData> {
-        response.let {resultResponse->
-            ++locationPaginateNumber
-            if (locationPaginateResponse == null){
-                locationPaginateResponse = resultResponse.data
-            }else{
-                val oldLocations = locationPaginateResponse
-                println("1")
-                println(oldLocations)
-                val newLocations = resultResponse.data
-                println("2")
-                println(newLocations)
-                oldLocations?.plusElement(newLocations)
-                println("3")
-                println(oldLocations)
-            }
-            return HomeUiState.Success(locationPaginateResponse ?: resultResponse.data)
+    private fun handleLocationResponse(location: HomeUiState.Success<LocationHomeUiData>): HomeUiState<LocationHomeUiData> {
+        location.let { resultResponse ->
+            locationPaginateNumber++
+            return HomeUiState.Success(resultResponse.data)
         }
     }
 
 
-    fun getCharactersById(charactersId:List<String>){
+    fun getCharactersById(charactersId: List<String>) {
         viewModelScope.launch {
-            getCharactersByIdUseCase.invoke(charactersId).collectLatest {response->
-                when(response){
-                    is NetworkResponseState.Success->{
-                        _characterResponse.postValue(HomeUiState.Success(characterHomeUiMapper.map(response.result)))
+            getCharactersByIdUseCase.invoke(charactersId).collectLatest { response ->
+                when (response) {
+                    is NetworkResponseState.Success -> {
+                        _characterResponse.postValue(
+                            HomeUiState.Success(
+                                characterHomeUiMapper.map(
+                                    response.result
+                                )
+                            )
+                        )
                     }
-                    is NetworkResponseState.Error->{
+                    is NetworkResponseState.Error -> {
                         _characterResponse.postValue(HomeUiState.Error(R.string.error))
                     }
-                    is NetworkResponseState.Loading->{
+                    is NetworkResponseState.Loading -> {
                         _characterResponse.postValue(HomeUiState.Loading)
                     }
                 }

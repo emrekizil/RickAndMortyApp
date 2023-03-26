@@ -3,15 +3,12 @@ package com.example.emrekizil_usgstajyerchallenge.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.emrekizil_usgstajyerchallenge.R
 import com.example.emrekizil_usgstajyerchallenge.databinding.ActivityMainBinding
-import com.example.emrekizil_usgstajyerchallenge.domain.module.RickAndMortyEntity
-import com.example.emrekizil_usgstajyerchallenge.ui.home.HomeUiState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

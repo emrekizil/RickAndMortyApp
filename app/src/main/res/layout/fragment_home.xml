@@ -29,4 +29,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/location_list_recyclerView" />
 
+    <ProgressBar
+        android:id="@+id/location_progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/location_list_recyclerView"
+        app:layout_constraintEnd_toEndOf="@+id/location_list_recyclerView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,6 @@
 package com.example.emrekizil_usgstajyerchallenge.ui.home
 
 import androidx.annotation.StringRes
-import com.example.emrekizil_usgstajyerchallenge.domain.module.RickAndMortyEntity
 
 sealed class HomeUiState <out T:Any>{
 

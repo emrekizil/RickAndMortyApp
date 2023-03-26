@@ -2,14 +2,13 @@ package com.example.emrekizil_usgstajyerchallenge.di
 
 import com.example.emrekizil_usgstajyerchallenge.data.dto.character.CharacterResponseItem
 import com.example.emrekizil_usgstajyerchallenge.data.mappers.RickAndMortyListMapper
-import com.example.emrekizil_usgstajyerchallenge.data.mappers.RickAndMortyListMapperImpl
-import com.example.emrekizil_usgstajyerchallenge.domain.module.RickAndMortyEntity
+import com.example.emrekizil_usgstajyerchallenge.data.mappers.LocationListMapperImpl
+import com.example.emrekizil_usgstajyerchallenge.domain.module.LocationEntity
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import com.example.emrekizil_usgstajyerchallenge.data.dto.locations.Result
 import com.example.emrekizil_usgstajyerchallenge.data.mappers.CharacterListMapperImpl
-import com.example.emrekizil_usgstajyerchallenge.data.mappers.RickAndMortyMapper
 import com.example.emrekizil_usgstajyerchallenge.domain.module.CharacterEntity
 import com.example.emrekizil_usgstajyerchallenge.ui.home.CharacterHomeUiData
 import com.example.emrekizil_usgstajyerchallenge.ui.home.CharacterHomeUiMapperImpl
@@ -23,11 +22,11 @@ import dagger.hilt.android.scopes.ViewModelScoped
 abstract class RickAndMortyMapperModule {
     @Binds
     @ViewModelScoped
-    abstract fun bindRickAndMortyListMapper(rickAndMortyListMapperImpl: RickAndMortyListMapperImpl):RickAndMortyListMapper<Result,RickAndMortyEntity>
+    abstract fun bindRickAndMortyListMapper(locationListMapperImpl: LocationListMapperImpl):RickAndMortyListMapper<Result,LocationEntity>
 
     @Binds
     @ViewModelScoped
-    abstract fun bindRickAndMortyLocationUiMapper(locationHomeUiMapperImpl: LocationHomeUiMapperImpl):RickAndMortyListMapper<RickAndMortyEntity,LocationHomeUiData>
+    abstract fun bindRickAndMortyLocationUiMapper(locationHomeUiMapperImpl: LocationHomeUiMapperImpl):RickAndMortyListMapper<LocationEntity,LocationHomeUiData>
 
 
     @Binds

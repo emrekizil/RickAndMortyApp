@@ -4,9 +4,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class BaseRecyclerViewAdapter<T:Any,VH:BaseViewHolder<T>>: RecyclerView.Adapter<VH>() {
-    private val items = mutableListOf<T>()
+    val items = mutableListOf<T>()
 
-    fun updateItems(newItems:List<T>){
+    open fun updateItems(newItems:List<T>){
         items.apply {
             clear()
             addAll(newItems)
