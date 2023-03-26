@@ -5,10 +5,11 @@ import com.example.emrekizil_usgstajyerchallenge.data.dto.character.CharacterRes
 import com.example.emrekizil_usgstajyerchallenge.data.dto.locations.LocationResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface RickAndMortyApi {
     @GET("location")
-    suspend fun getLocations() : LocationResponse
+    suspend fun getLocations(@Query("page") pageNumber:Int) : LocationResponse
 
     @GET("character/{id}")
     suspend fun getCharactersById(@Path("id") id:List<String>) : CharacterResponse

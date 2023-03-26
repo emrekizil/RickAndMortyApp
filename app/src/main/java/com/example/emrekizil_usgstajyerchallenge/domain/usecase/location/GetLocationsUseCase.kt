@@ -5,5 +5,5 @@ import com.example.emrekizil_usgstajyerchallenge.domain.module.RickAndMortyEntit
 import kotlinx.coroutines.flow.Flow
 
 interface GetLocationsUseCase {
-    suspend operator fun invoke(): Flow<NetworkResponseState<List<RickAndMortyEntity>>>
+    suspend operator fun invoke(pageNumber:Int): Flow<NetworkResponseState<List<RickAndMortyEntity>>>
 }

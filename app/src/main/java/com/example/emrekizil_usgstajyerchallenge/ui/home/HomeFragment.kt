@@ -2,6 +2,7 @@ package com.example.emrekizil_usgstajyerchallenge.ui.home
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -39,6 +40,8 @@ class HomeFragment : Fragment() {
     var isLoading = false
     var isLastPage = false
     var isScrolling = false
+
+    var pageNumber = 1
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -56,7 +59,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.characterListRecyclerView.adapter = characterAdapter
         binding.characterListRecyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-        viewModel.getLocations()
+        viewModel.getLocations(pageNumber)
         observeLocationUiState()
         observeCharacterUiState()
     }
@@ -131,6 +134,12 @@ class HomeFragment : Fragment() {
                     isTotalMoreThanVisible && isScrolling
             if(shouldPaginate){
                 isScrolling= false
+                pageNumber++
+                viewModel.getLocations(pageNumber)
+                recyclerView.scrollToPosition(0)
+            }
+            if (!recyclerView.canScrollVertically(-1) && isScrolling ) {
+                Log.d("-----","start");
 
             }
         }

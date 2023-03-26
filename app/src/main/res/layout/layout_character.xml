@@ -9,62 +9,60 @@
         android:id="@+id/character_cardView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:strokeColor="@color/black"
-        app:strokeWidth="1dp"
+        app:strokeColor="@color/load"
+        app:strokeWidth="2dp"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/load3">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/character_imageView"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/female_imageView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/female_imageView"
-                android:layout_width="128dp"
-                android:layout_height="128dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:alpha="0.7"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5"
                 app:srcCompat="@drawable/ic_female" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/male_imageView"
-                android:layout_width="128dp"
-                android:layout_height="128dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:alpha="0.7"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5"
                 app:srcCompat="@drawable/ic_male" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/unknown_imageView"
-                android:layout_width="128dp"
-                android:layout_height="128dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:alpha="0.7"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5"
                 app:srcCompat="@drawable/ic_question_mark"
@@ -74,16 +72,14 @@
                 android:id="@+id/character_textView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:ellipsize="start"
-                android:textAlignment="viewStart"
-                android:textColor="@color/black"
-                android:textSize="22sp"
+                android:textAlignment="center"
+                android:textColor="@color/load2"
+                android:textSize="25sp"
                 android:textStyle="bold"
-                android:maxWidth="120dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/female_imageView"
+                app:layout_constraintEnd_toStartOf="@+id/female_imageView"
+                app:layout_constraintStart_toEndOf="@+id/character_imageView"
+                app:layout_constraintTop_toTopOf="@+id/female_imageView"
                 tools:text="Lorem ipsum jobel" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

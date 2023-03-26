@@ -13,6 +13,7 @@ import com.example.emrekizil_usgstajyerchallenge.domain.usecase.character.GetCha
 import com.example.emrekizil_usgstajyerchallenge.domain.usecase.location.GetLocationsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,13 +28,15 @@ class HomeViewModel @Inject constructor(
     private var _locationResponse = MutableLiveData<HomeUiState<LocationHomeUiData>>()
     val locationResponse:LiveData<HomeUiState<LocationHomeUiData>> get() = _locationResponse
 
+    var locationPaginateResponse: List<LocationHomeUiData>? = null
+    var locationPaginateNumber = 1
+
     private var _characterResponse = MutableLiveData<HomeUiState<CharacterHomeUiData>>()
     val characterResponse:LiveData<HomeUiState<CharacterHomeUiData>> get() = _characterResponse
 
-
-    fun getLocations(){
+    fun getLocations(pageNumber:Int){
         viewModelScope.launch {
-            getLocationsUseCase.invoke().collectLatest { response->
+            getLocationsUseCase.invoke(pageNumber).collectLatest { response->
                 when(response){
                     is NetworkResponseState.Success->{
                         _locationResponse.postValue(HomeUiState.Success(rickAndMortyListMapper.map(response.result)))
@@ -49,6 +52,27 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    private fun handleLocationResponse(response: HomeUiState.Success<LocationHomeUiData>): HomeUiState<LocationHomeUiData> {
+        response.let {resultResponse->
+            ++locationPaginateNumber
+            if (locationPaginateResponse == null){
+                locationPaginateResponse = resultResponse.data
+            }else{
+                val oldLocations = locationPaginateResponse
+                println("1")
+                println(oldLocations)
+                val newLocations = resultResponse.data
+                println("2")
+                println(newLocations)
+                oldLocations?.plusElement(newLocations)
+                println("3")
+                println(oldLocations)
+            }
+            return HomeUiState.Success(locationPaginateResponse ?: resultResponse.data)
+        }
+    }
+
+
     fun getCharactersById(charactersId:List<String>){
         viewModelScope.launch {
             getCharactersByIdUseCase.invoke(charactersId).collectLatest {response->
@@ -57,7 +81,6 @@ class HomeViewModel @Inject constructor(
                         _characterResponse.postValue(HomeUiState.Success(characterHomeUiMapper.map(response.result)))
                     }
                     is NetworkResponseState.Error->{
-                       // println("emre")
                         _characterResponse.postValue(HomeUiState.Error(R.string.error))
                     }
                     is NetworkResponseState.Loading->{

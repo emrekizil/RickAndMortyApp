@@ -9,5 +9,6 @@ import javax.inject.Inject
 class GetLocationsUseCaseImpl @Inject constructor(
     private val repository: RickAndMortyRepository
 ) : GetLocationsUseCase {
-    override suspend fun invoke(): Flow<NetworkResponseState<List<RickAndMortyEntity>>> = repository.getLocations()
+    override suspend fun invoke(pageNumber:Int): Flow<NetworkResponseState<List<RickAndMortyEntity>>> =
+        repository.getLocations(pageNumber)
 }

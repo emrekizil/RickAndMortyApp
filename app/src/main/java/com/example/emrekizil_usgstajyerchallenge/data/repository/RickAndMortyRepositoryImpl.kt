@@ -24,10 +24,10 @@ class RickAndMortyRepositoryImpl @Inject constructor(
     private val characterListMapper:RickAndMortyListMapper<CharacterResponseItem,CharacterEntity>,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : RickAndMortyRepository {
-    override suspend fun getLocations(): Flow<NetworkResponseState<List<RickAndMortyEntity>>> =
+    override suspend fun getLocations(pageNumber:Int): Flow<NetworkResponseState<List<RickAndMortyEntity>>> =
         flow {
             emit(NetworkResponseState.Loading)
-            when(val response = remoteDataSource.getLocations()){
+            when(val response = remoteDataSource.getLocations(pageNumber)){
                 is NetworkResponseState.Error -> emit(response)
                 NetworkResponseState.Loading->Unit
                 is NetworkResponseState.Success -> emit(

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -36,11 +37,13 @@ class MainActivity : AppCompatActivity() {
     fun homeFragment(){
         binding.actionbarImageView.visibility = View.VISIBLE
         binding.actionbarTextView.visibility= View.GONE
+        binding.customToolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.load1))
     }
     fun detailFragment(characterName:String){
         binding.actionbarImageView.visibility = View.GONE
         binding.actionbarTextView.visibility = View.VISIBLE
         binding.actionbarTextView.text = characterName
+        binding.customToolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
     }
 
 

@@ -7,9 +7,9 @@ import com.example.emrekizil_usgstajyerchallenge.data.dto.locations.Result
 import javax.inject.Inject
 
 class RemoteDataSourceImpl @Inject constructor(private val api: RickAndMortyApi) :RemoteDataSource {
-    override suspend fun getLocations(): NetworkResponseState<List<Result>> =
+    override suspend fun getLocations(pageNumber:Int): NetworkResponseState<List<Result>> =
         try {
-            val response =  api.getLocations()
+            val response =  api.getLocations(pageNumber)
             NetworkResponseState.Success(response.results)
         }catch (e:Exception){
             NetworkResponseState.Error(e)

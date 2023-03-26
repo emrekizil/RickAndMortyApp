@@ -10,11 +10,9 @@
         android:id="@+id/character_imageView"
         android:layout_width="275dp"
         android:layout_height="275dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars" />
 
@@ -23,28 +21,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
         android:layout_marginBottom="5dp"
+        android:fontFamily="@font/avenirltstd_black"
         android:text="@string/status"
+        android:textColor="@color/black"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:fontFamily="@font/avenirltstd_black"
-        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/specy_textView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/character_imageView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/character_status_textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
         android:fontFamily="@font/avenirltstd_roman"
         android:textColor="@color/black"
         android:textSize="22sp"
         android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="@+id/status_textView"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/character_imageView"
         app:layout_constraintStart_toStartOf="@+id/character_createdAt_textView"
         app:layout_constraintTop_toTopOf="@+id/status_textView"
         tools:text="@tools:sample/lorem" />
@@ -218,13 +214,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:fontFamily="@font/avenirltstd_roman"
         android:textColor="@color/black"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="@+id/createdAt_textView"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/character_imageView"
         app:layout_constraintStart_toEndOf="@id/createdAt_textView"
         app:layout_constraintTop_toTopOf="@+id/createdAt_textView"
-        tools:text="@tools:sample/lorem"/>
+        tools:text="@tools:sample/lorem" />
 </androidx.constraintlayout.widget.ConstraintLayout>

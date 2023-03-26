@@ -6,7 +6,7 @@ import com.example.emrekizil_usgstajyerchallenge.domain.module.RickAndMortyEntit
 import kotlinx.coroutines.flow.Flow
 
 interface RickAndMortyRepository {
-    suspend fun getLocations(): Flow<NetworkResponseState<List<RickAndMortyEntity>>>
+    suspend fun getLocations(pageNumber:Int): Flow<NetworkResponseState<List<RickAndMortyEntity>>>
 
     suspend fun getCharactersById(characterIds:List<String>):Flow<NetworkResponseState<List<CharacterEntity>>>
 

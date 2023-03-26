@@ -7,7 +7,7 @@ import com.example.emrekizil_usgstajyerchallenge.data.dto.locations.Result
 
 interface RemoteDataSource {
 
-    suspend fun getLocations(): NetworkResponseState<List<Result>>
+    suspend fun getLocations(pageNumber:Int): NetworkResponseState<List<Result>>
 
     suspend fun getCharactersById(characterIds:List<String>): NetworkResponseState<List<CharacterResponseItem>>
 }
