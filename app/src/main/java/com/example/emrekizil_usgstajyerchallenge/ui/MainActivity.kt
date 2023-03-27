@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         binding.actionbarImageView.visibility = View.GONE
         binding.actionbarTextView.visibility = View.VISIBLE
         binding.actionbarTextView.text = characterName
+        supportActionBar?.title = ""
         binding.customToolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
     }
 
