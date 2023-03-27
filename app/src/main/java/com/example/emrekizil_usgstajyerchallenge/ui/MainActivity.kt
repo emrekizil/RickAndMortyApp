@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     fun homeFragment(){
         binding.actionbarImageView.visibility = View.VISIBLE
         binding.actionbarTextView.visibility= View.GONE
+        supportActionBar?.title = ""
         binding.customToolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.load1))
     }
     fun detailFragment(characterName:String){

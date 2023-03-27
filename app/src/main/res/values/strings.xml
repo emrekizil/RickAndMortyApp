@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name"></string>
+    <string name="app_name">RickAndMorty App</string>
     <string name="error">Error</string>
     <string name="status">Status:</string>
     <string name="specy">Specy:</string>

@@ -1,6 +1,5 @@
 package com.example.emrekizil_usgstajyerchallenge.utility
 
-import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import coil.load
 import coil.size.Scale

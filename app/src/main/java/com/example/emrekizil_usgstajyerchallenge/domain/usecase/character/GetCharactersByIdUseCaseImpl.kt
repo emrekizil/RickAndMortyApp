@@ -2,7 +2,7 @@ package com.example.emrekizil_usgstajyerchallenge.domain.usecase.character
 
 
 import com.example.emrekizil_usgstajyerchallenge.data.NetworkResponseState
-import com.example.emrekizil_usgstajyerchallenge.domain.module.CharacterEntity
+import com.example.emrekizil_usgstajyerchallenge.domain.entity.CharacterEntity
 import com.example.emrekizil_usgstajyerchallenge.domain.repository.RickAndMortyRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

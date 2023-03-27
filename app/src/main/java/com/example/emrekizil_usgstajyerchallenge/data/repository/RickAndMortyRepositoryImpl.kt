@@ -4,11 +4,11 @@ import com.example.emrekizil_usgstajyerchallenge.data.NetworkResponseState
 import com.example.emrekizil_usgstajyerchallenge.data.dto.character.CharacterResponseItem
 import com.example.emrekizil_usgstajyerchallenge.data.dto.locations.Result
 import com.example.emrekizil_usgstajyerchallenge.data.mappers.RickAndMortyListMapper
-import com.example.emrekizil_usgstajyerchallenge.data.source.RemoteDataSource
+import com.example.emrekizil_usgstajyerchallenge.data.source.remote.RemoteDataSource
 import com.example.emrekizil_usgstajyerchallenge.data.source.local.LocalDataSource
 import com.example.emrekizil_usgstajyerchallenge.di.IoDispatcher
-import com.example.emrekizil_usgstajyerchallenge.domain.module.CharacterEntity
-import com.example.emrekizil_usgstajyerchallenge.domain.module.LocationEntity
+import com.example.emrekizil_usgstajyerchallenge.domain.entity.CharacterEntity
+import com.example.emrekizil_usgstajyerchallenge.domain.entity.LocationEntity
 import com.example.emrekizil_usgstajyerchallenge.domain.repository.RickAndMortyRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -52,7 +52,6 @@ class RickAndMortyRepositoryImpl @Inject constructor(
                         )
                     )
                 )
-
                 }
             }
         }.flowOn(ioDispatcher)

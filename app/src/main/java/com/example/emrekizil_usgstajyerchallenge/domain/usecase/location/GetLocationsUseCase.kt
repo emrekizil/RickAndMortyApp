@@ -1,7 +1,7 @@
 package com.example.emrekizil_usgstajyerchallenge.domain.usecase.location
 
 import com.example.emrekizil_usgstajyerchallenge.data.NetworkResponseState
-import com.example.emrekizil_usgstajyerchallenge.domain.module.LocationEntity
+import com.example.emrekizil_usgstajyerchallenge.domain.entity.LocationEntity
 import kotlinx.coroutines.flow.Flow
 
 interface GetLocationsUseCase {

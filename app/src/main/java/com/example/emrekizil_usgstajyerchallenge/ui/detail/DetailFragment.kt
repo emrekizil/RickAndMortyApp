@@ -5,9 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.navArgs
-import com.example.emrekizil_usgstajyerchallenge.R
 import com.example.emrekizil_usgstajyerchallenge.databinding.FragmentDetailBinding
 import com.example.emrekizil_usgstajyerchallenge.ui.MainActivity
 import com.example.emrekizil_usgstajyerchallenge.ui.home.CharacterHomeUiData
@@ -23,9 +21,7 @@ class DetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentDetailBinding.inflate(layoutInflater)
-        //(activity as AppCompatActivity).supportActionBar?.title = args.character.name
         (activity as MainActivity).detailFragment(args.character.name)
-        //(activity as AppCompatActivity).supportActionBar?.setIcon(com.google.android.material.R.drawable.m3_tabs_transparent_background)
         return binding.root
     }
 

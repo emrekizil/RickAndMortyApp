@@ -1,7 +1,7 @@
 package com.example.emrekizil_usgstajyerchallenge.data.mappers
 
 import com.example.emrekizil_usgstajyerchallenge.data.dto.locations.Result
-import com.example.emrekizil_usgstajyerchallenge.domain.module.LocationEntity
+import com.example.emrekizil_usgstajyerchallenge.domain.entity.LocationEntity
 import com.example.emrekizil_usgstajyerchallenge.utility.addCharactersIds
 import javax.inject.Inject
 

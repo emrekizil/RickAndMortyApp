@@ -1,7 +1,7 @@
 package com.example.emrekizil_usgstajyerchallenge.di
 
-import com.example.emrekizil_usgstajyerchallenge.data.source.RemoteDataSource
-import com.example.emrekizil_usgstajyerchallenge.data.source.RemoteDataSourceImpl
+import com.example.emrekizil_usgstajyerchallenge.data.source.remote.RemoteDataSource
+import com.example.emrekizil_usgstajyerchallenge.data.source.remote.RemoteDataSourceImpl
 import com.example.emrekizil_usgstajyerchallenge.data.source.local.LocalDataSource
 import com.example.emrekizil_usgstajyerchallenge.data.source.local.LocalDataSourceImpl
 import dagger.Binds
@@ -15,7 +15,7 @@ import dagger.hilt.android.scopes.ViewModelScoped
 abstract class DataSourceModule {
     @Binds
     @ViewModelScoped
-    abstract fun bindRemoteDataSource(remoteDataSourceImpl: RemoteDataSourceImpl):RemoteDataSource
+    abstract fun bindRemoteDataSource(remoteDataSourceImpl: RemoteDataSourceImpl): RemoteDataSource
 
     @Binds
     @ViewModelScoped

@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.emrekizil_usgstajyerchallenge.R
 import com.example.emrekizil_usgstajyerchallenge.data.NetworkResponseState
 import com.example.emrekizil_usgstajyerchallenge.data.mappers.RickAndMortyListMapper
-import com.example.emrekizil_usgstajyerchallenge.domain.module.CharacterEntity
-import com.example.emrekizil_usgstajyerchallenge.domain.module.LocationEntity
+import com.example.emrekizil_usgstajyerchallenge.domain.entity.CharacterEntity
+import com.example.emrekizil_usgstajyerchallenge.domain.entity.LocationEntity
 import com.example.emrekizil_usgstajyerchallenge.domain.usecase.character.GetCharactersByIdUseCase
 import com.example.emrekizil_usgstajyerchallenge.domain.usecase.location.GetLocationsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,20 +24,20 @@ class HomeViewModel @Inject constructor(
     private val characterHomeUiMapper: RickAndMortyListMapper<CharacterEntity, CharacterHomeUiData>
 ) : ViewModel() {
 
-    private var _locationResponse = MutableLiveData<HomeUiState<LocationHomeUiData>>()
-    val locationResponse: LiveData<HomeUiState<LocationHomeUiData>> get() = _locationResponse
+    private var _locationHomeUiState = MutableLiveData<HomeUiState<LocationHomeUiData>>()
+    val locationHomeUiState: LiveData<HomeUiState<LocationHomeUiData>> get() = _locationHomeUiState
 
     var locationPaginateNumber = 1
 
-    private var _characterResponse = MutableLiveData<HomeUiState<CharacterHomeUiData>>()
-    val characterResponse: LiveData<HomeUiState<CharacterHomeUiData>> get() = _characterResponse
+    private var _characterHomeUiState = MutableLiveData<HomeUiState<CharacterHomeUiData>>()
+    val characterHomeUiState: LiveData<HomeUiState<CharacterHomeUiData>> get() = _characterHomeUiState
 
     fun getLocations() {
         viewModelScope.launch {
             getLocationsUseCase.invoke(locationPaginateNumber).collectLatest { response ->
                 when (response) {
                     is NetworkResponseState.Success -> {
-                        _locationResponse.postValue(
+                        _locationHomeUiState.postValue(
                             handleLocationResponse(
                                 HomeUiState.Success(
                                     rickAndMortyListMapper.map(response.result)
@@ -46,10 +46,10 @@ class HomeViewModel @Inject constructor(
                         )
                     }
                     is NetworkResponseState.Error -> {
-                        _locationResponse.postValue(HomeUiState.Error(R.string.error))
+                        _locationHomeUiState.postValue(HomeUiState.Error(R.string.error))
                     }
                     is NetworkResponseState.Loading -> {
-                        _locationResponse.postValue(HomeUiState.Loading)
+                        _locationHomeUiState.postValue(HomeUiState.Loading)
                     }
                 }
             }
@@ -69,7 +69,7 @@ class HomeViewModel @Inject constructor(
             getCharactersByIdUseCase.invoke(charactersId).collectLatest { response ->
                 when (response) {
                     is NetworkResponseState.Success -> {
-                        _characterResponse.postValue(
+                        _characterHomeUiState.postValue(
                             HomeUiState.Success(
                                 characterHomeUiMapper.map(
                                     response.result
@@ -78,10 +78,10 @@ class HomeViewModel @Inject constructor(
                         )
                     }
                     is NetworkResponseState.Error -> {
-                        _characterResponse.postValue(HomeUiState.Error(R.string.error))
+                        _characterHomeUiState.postValue(HomeUiState.Error(R.string.error))
                     }
                     is NetworkResponseState.Loading -> {
-                        _characterResponse.postValue(HomeUiState.Loading)
+                        _characterHomeUiState.postValue(HomeUiState.Loading)
                     }
                 }
 

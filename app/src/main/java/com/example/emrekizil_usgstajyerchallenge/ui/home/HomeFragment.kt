@@ -2,23 +2,20 @@ package com.example.emrekizil_usgstajyerchallenge.ui.home
 
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
-import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.emrekizil_usgstajyerchallenge.R
-import com.example.emrekizil_usgstajyerchallenge.databinding.ActivityMainBinding
 import com.example.emrekizil_usgstajyerchallenge.databinding.FragmentHomeBinding
 import com.example.emrekizil_usgstajyerchallenge.ui.MainActivity
+import com.example.emrekizil_usgstajyerchallenge.ui.home.adapter.CharacterAdapter
+import com.example.emrekizil_usgstajyerchallenge.ui.home.adapter.LocationAdapter
 
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -50,6 +47,8 @@ class HomeFragment : Fragment() {
             locationListRecyclerView.adapter = adapter
             locationListRecyclerView.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
             locationListRecyclerView.addOnScrollListener(this@HomeFragment.scrollListener)
+            characterListRecyclerView.adapter = characterAdapter
+            characterListRecyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
         }
         (activity as MainActivity).homeFragment()
         return binding.root
@@ -57,29 +56,27 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.characterListRecyclerView.adapter = characterAdapter
-        binding.characterListRecyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-        viewModel.getLocations()
         observeLocationUiState()
         observeCharacterUiState()
     }
 
 
     private fun observeLocationUiState() {
-        viewModel.locationResponse.observe(viewLifecycleOwner){
+        viewModel.getLocations()
+        viewModel.locationHomeUiState.observe(viewLifecycleOwner){
             when(it){
                 is HomeUiState.Error->{
                     Toast.makeText(requireContext(),getString(it.message),Toast.LENGTH_SHORT).show()
                     isLoading = false
-                    hideProgressBar()
+                    hideLocationProgressBar()
                 }
                 is HomeUiState.Loading->{
                     isLoading = true
-                    showProgressBar()
+                    showLocationProgressBar()
                 }
                 is HomeUiState.Success->{
                     isLoading = false
-                    hideProgressBar()
+                    hideLocationProgressBar()
                     handleSuccessUiState(it.data)
                 }
             }
@@ -87,16 +84,18 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeCharacterUiState() {
-        viewModel.characterResponse.observe(viewLifecycleOwner){
+        viewModel.characterHomeUiState.observe(viewLifecycleOwner){
             when(it){
                 is HomeUiState.Error->{
                     Toast.makeText(requireContext(),getString(it.message),Toast.LENGTH_SHORT).show()
+                    hideCharacterProgressBar()
                 }
                 is HomeUiState.Loading->{
-                    Toast.makeText(requireContext(),"Loading Characters",Toast.LENGTH_SHORT).show()
+                    showCharacterProgressBar()
                 }
                 is HomeUiState.Success->{
                     handleSuccessCharacterUiState(it.data)
+                    hideCharacterProgressBar()
                 }
             }
         }
@@ -117,14 +116,20 @@ class HomeFragment : Fragment() {
         val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(characterHomeUiData)
         findNavController().navigate(action)
     }
-    private fun hideProgressBar(){
+    private fun hideLocationProgressBar(){
         binding.locationProgressBar.visibility = View.INVISIBLE
     }
-    private fun showProgressBar(){
+    private fun showLocationProgressBar(){
         binding.locationProgressBar.visibility = View.VISIBLE
     }
+    private fun hideCharacterProgressBar(){
+        binding.characterProgressBar.visibility = View.INVISIBLE
+    }
+    private fun showCharacterProgressBar(){
+        binding.characterProgressBar.visibility = View.VISIBLE
+    }
 
-    val scrollListener = object : RecyclerView.OnScrollListener(){
+    private val scrollListener = object : RecyclerView.OnScrollListener(){
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
 
@@ -142,15 +147,12 @@ class HomeFragment : Fragment() {
             if(shouldPaginate && !recyclerView.canScrollHorizontally(1)){
                 isScrolling= false
                 if (pageNumber!=7){
-                    hideProgressBar()
+                    hideLocationProgressBar()
                     viewModel.getLocations()
                     pageNumber++
                 }
-
             }
-
         }
-
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
             if(newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
@@ -158,26 +160,5 @@ class HomeFragment : Fragment() {
             }
         }
     }
-
-    val anotherScrollListener = object:RecyclerView.OnScrollListener(){
-        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-            super.onScrollStateChanged(recyclerView, newState)
-            when(newState){
-                AbsListView.OnScrollListener.SCROLL_STATE_FLING->{
-
-                }
-                AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL->{
-
-                }else->{
-                    if(!recyclerView.canScrollHorizontally(1)){
-                        hideProgressBar()
-                        viewModel.getLocations()
-                        pageNumber++
-                    }
-                }
-            }
-        }
-    }
-
 
 }

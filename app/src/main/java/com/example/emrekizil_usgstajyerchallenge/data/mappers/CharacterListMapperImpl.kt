@@ -1,8 +1,7 @@
 package com.example.emrekizil_usgstajyerchallenge.data.mappers
 
 import com.example.emrekizil_usgstajyerchallenge.data.dto.character.CharacterResponseItem
-import com.example.emrekizil_usgstajyerchallenge.domain.module.CharacterEntity
-import com.example.emrekizil_usgstajyerchallenge.utility.addCharactersIds
+import com.example.emrekizil_usgstajyerchallenge.domain.entity.CharacterEntity
 import com.example.emrekizil_usgstajyerchallenge.utility.dateTimeConverter
 import com.example.emrekizil_usgstajyerchallenge.utility.getEpisodes
 import javax.inject.Inject
