@@ -28,6 +28,9 @@ Domain layer is responsible for handling business logic and sits between Ui and 
 ### Ui Layer:
 Ui layer displays application data on the screen and makes Ui ready to interact with users. It contains UI-related state and Ui logic. Ui layer includes viewmodels, fragments, activities, components, states, mappers.
 
+## Importance of Mapping Data Between Layers
+In-app, each layer has a data model on its own, and data is mapped between layers to each layer model. Using different models per layer is perfect for a clean architecture approach. If the app sticks to just one model and some situations like database modifications, adding restful apis to data source or needing a usable model for Ui, comes out the app needs to update all models. Using models per layer is a great key to creating scalable and maintainable software.
+
 # Tech Stack & Open Source Libraries
 - Minimum SDK level 21
 - %100 [Kotlin](https://kotlinlang.org/) based
@@ -53,3 +56,5 @@ Ui layer displays application data on the screen and makes Ui ready to interact 
 - [Turbine](https://github.com/cashapp/turbine) is a small testing library for kotlinx.coroutines Flow.
 
 https://user-images.githubusercontent.com/95411289/228645698-a52ba2dc-1dd0-44f8-a241-9ca98f0d09f1.mp4
+
+
