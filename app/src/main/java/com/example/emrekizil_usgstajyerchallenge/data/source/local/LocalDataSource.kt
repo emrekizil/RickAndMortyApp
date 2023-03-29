@@ -4,6 +4,6 @@ import kotlinx.coroutines.flow.Flow
 
 
 interface LocalDataSource {
-    fun isAppFirstOpen(): Flow<Boolean>
-    suspend fun saveAppFirstOpen(isFirstOpen:Boolean)
+    fun getIsAppFirstOpenState(): Flow<Boolean>
+    suspend fun saveAppFirstOpenState(isFirstOpen:Boolean)
 }

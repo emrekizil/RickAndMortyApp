@@ -66,7 +66,6 @@ class HomeFragment : Fragment() {
         viewModel.locationHomeUiState.observe(viewLifecycleOwner){
             when(it){
                 is HomeUiState.Error->{
-                    Toast.makeText(requireContext(),getString(it.message),Toast.LENGTH_SHORT).show()
                     isLoading = false
                     hideLocationProgressBar()
                 }

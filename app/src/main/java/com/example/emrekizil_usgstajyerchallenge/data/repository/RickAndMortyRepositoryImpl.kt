@@ -57,10 +57,10 @@ class RickAndMortyRepositoryImpl @Inject constructor(
         }.flowOn(ioDispatcher)
 
     override fun getIsAppFirstOpenState(): Flow<Boolean> =
-        localDataSource.isAppFirstOpen()
+        localDataSource.getIsAppFirstOpenState()
 
     override suspend fun saveAppFirstOpenState(state:Boolean) {
-        localDataSource.saveAppFirstOpen(state)
+        localDataSource.saveAppFirstOpenState(state)
     }
 
 

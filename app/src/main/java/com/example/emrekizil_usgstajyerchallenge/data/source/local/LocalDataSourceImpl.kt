@@ -18,7 +18,7 @@ class LocalDataSourceImpl @Inject constructor(
         val isFirstOpenState = booleanPreferencesKey("isFirstOpen")
     }
 
-    override fun isAppFirstOpen(): Flow<Boolean> =
+    override fun getIsAppFirstOpenState(): Flow<Boolean> =
         dataStore.data
             .catch { e->
                 if(e is IOException){
@@ -31,7 +31,7 @@ class LocalDataSourceImpl @Inject constructor(
                 preference[PreferencesKeys.isFirstOpenState] ?: true
             }
 
-    override suspend fun saveAppFirstOpen(isFirstOpen: Boolean) {
+    override suspend fun saveAppFirstOpenState(isFirstOpen: Boolean) {
         dataStore.edit {preference->
             preference[PreferencesKeys.isFirstOpenState] = isFirstOpen
         }
