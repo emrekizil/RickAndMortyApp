@@ -20,7 +20,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getLocationsUseCase: GetLocationsUseCase,
     private val getCharactersByIdUseCase: GetCharactersByIdUseCase,
-    private val rickAndMortyListMapper: RickAndMortyListMapper<LocationEntity, LocationHomeUiData>,
+    private val locationHomeUiMapper: RickAndMortyListMapper<LocationEntity, LocationHomeUiData>,
     private val characterHomeUiMapper: RickAndMortyListMapper<CharacterEntity, CharacterHomeUiData>
 ) : ViewModel() {
 
@@ -40,7 +40,7 @@ class HomeViewModel @Inject constructor(
                         _locationHomeUiState.postValue(
                             handleLocationResponse(
                                 HomeUiState.Success(
-                                    rickAndMortyListMapper.map(response.result)
+                                    locationHomeUiMapper.map(response.result)
                                 )
                             )
                         )
