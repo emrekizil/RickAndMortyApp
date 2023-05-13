@@ -1,7 +1,7 @@
 # RickAndMorty App
 RickAndMorty app is built on Clean Architecture and MVVM, which shows character lists by selected locations.
 App includes Unit Tests over Data, Domain and, UI layers.
-### All tasks 1 to 8 were completed appropriately according to the given challenge document.
+
 
 # Screenshots
 <p align="center">
